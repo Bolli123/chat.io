@@ -1,0 +1,8 @@
+export const GET_USERS = 'GET_USERS'
+export const GET_MESSAGES = 'GET_MESSAGES'
+export const GET_ROOMS = 'GET_ROOMS'
+export const SET_ROOM = 'SET_ROOM'
+export const SET_USERS = 'SET_USERS'
+export const SET_JOINED_ROOMS = 'SET_JOINED_ROOMS'
+export const DELETE_JOINED_ROOM = 'DELETE_JOINED_ROOM'
+export const SET_USERNAME = 'SET_USERNAME'
