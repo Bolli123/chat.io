@@ -22,7 +22,6 @@ const Input = ({ value, onInput, type, errorMessage, label, name, htmlId}) => (
 );
 
 Input.propTypes = {
-    /* The value provided to the input HTML tag*/
     value: PropTypes.string.isRequired,
     onInput: PropTypes.func.isRequired ,
     type: PropTypes.oneOf(['text', 'password', 'submit', 'email', 'number']) ,

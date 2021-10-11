@@ -6,6 +6,9 @@ import Form from '../Form'
 import Modal from 'react-modal';
 import { socket } from '../../services/socketService';
 import { setUserName } from '../../actions/userActions'
+import PropTypes from 'prop-types';
+
+
 
 const customStyles = {
     content : {
@@ -19,10 +22,14 @@ const customStyles = {
   };
 
 class LoginModal extends React.Component {
-    state = {
-        username: '',
-        nameError: '',
-        submitted: false
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            username: '',
+            nameError: '',
+            submitted: false
+        }
     }
 
     onInput(e) { 
@@ -37,35 +44,49 @@ class LoginModal extends React.Component {
             });
             return false
         }
-        socket.emit("adduser", username, function(available){
-            if (!available){
-                return false
-            }
+        socket.emit("adduser", username, (available) => {
+            console.log(available)
         });
         socket.emit('joinroom', {room: 'lobby'}, callback => {
             console.log(callback)
         })
-        return true
+        const { nameError } = this.state
+        return nameError === ''
 
     }
 
-
-    async submitForm(e){
+    test() {
+        this.setState({
+            nameError: 'username taken'
+        })
+    }
+    submitForm(e){
         e.preventDefault();
-        const { submitted } = this.state
-        const validForm = await this.validateForm()
-        const { nameError } = this.state
-        const { setUserName } = this.props
-        if(!validForm){
-            const errMsg = nameError
-            toastr.error(errMsg, 'Failed!');
-        } else {
-            toastr.success('Welcome ' + this.state.username, 'Success!');
+        const { username } = this.state
+        if(username === ''){ 
             this.setState({
-                submitted: true,
+                nameError: 'Username is required'
             });
+            return false
         }
-        setUserName(this.state.username)
+        socket.emit("adduser", username, (available) => {
+            if (!available) {
+                this.setState({
+                    nameError: "username is taken"
+                })
+            }
+            else {
+                const { setUserName } = this.props
+                socket.emit('joinroom', {room: 'lobby'}, callback => {
+                    console.log(callback)
+                })
+                this.setState({
+                    submitted: true
+                })
+                setUserName(this.state.username)
+            }
+        });
+
     }
 
     render() {
@@ -101,5 +122,11 @@ class LoginModal extends React.Component {
         );
     }
 }
+
+
+LoginModal.propTypes = {
+    setUserName: PropTypes.func.isRequired
+}
+
 
 export default connect(null, { setUserName })(LoginModal)

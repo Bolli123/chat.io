@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types'
+
 
 const Messages = props => (
     <div className="messages">
@@ -7,5 +9,19 @@ const Messages = props => (
         </div>) }
     </div>
 );
+
+Messages.propTypes = {
+    messages: PropTypes.arrayOf(
+        PropTypes.shape({
+            nick: PropTypes.string,
+            timestamp: PropTypes.string,
+            message: PropTypes.string
+        })
+    )
+}
+
+Messages.defaultProps = {
+    messages: []
+}
 
 export default Messages

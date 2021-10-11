@@ -52,6 +52,7 @@
     width: 100%;
     border: #D7D7D7 2px solid;
     color: #33B8D8 ;
+    overflow: hidden;
 }
 
 .chat-window .rooms .room-selected {
@@ -64,6 +65,7 @@
     border-radius: 0;
     border: #33B8D8 2px solid;
     color: #33B8D8 ;
+    overflow: hidden;
 }
 
 .chat-window .users {
@@ -83,6 +85,7 @@
     border-radius: 0;
     color: #33B8D8 ;
     margin-top: 1px;
+    overflow: hidden;
 }
 
 .chat-window .users .username {

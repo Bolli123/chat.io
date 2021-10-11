@@ -17,7 +17,7 @@ describe('ChatWindow tests', () => {
     let mockSocketServer, mockSocket;
 
     beforeEach(() => {
-        mockSocketServer = new Server('http://localhost:3050'); /* This can be any available port */
+        mockSocketServer = new Server('http://localhost:8000'); /* This can be any available port */
 
         mockSocketServer.on('connection', socket => {
             socket.on('message', message => {
@@ -25,15 +25,16 @@ describe('ChatWindow tests', () => {
             });
         });
 
-        mockSocket = SocketIO.connect('http://localhost:3050'); /* Connecting to the fake SocketIO server */
-
+        mockSocket = SocketIO.connect('http://localhost:8000'); /* Connecting to the fake SocketIO server */
         /* A must for the socket.io to work, which relies on timers */
         jest.runOnlyPendingTimers();
     });
 
     it('should emit the right message', () => {
-        const message = 'Hello, everybody!';
         const component = shallow(<ChatWindow />);
+        const username = "tester"
+        component.find('input[type="text"]').first().simulate('input', { target: { value: username } });
+        component.find('button').first().simulate('click');
 
         component.find('input[type="text"]').first().simulate('input', { target: { value: message } });
         component.find('button').first().simulate('click');

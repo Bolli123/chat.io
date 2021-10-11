@@ -125,7 +125,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('privatemsg', function (msgObj, fn) {
-
+		console.log(msgObj.nick)
 		//If user exists in global user list.
 		if(users[msgObj.nick] !== undefined) {
 			//Send the message only to this user.
